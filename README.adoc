@@ -1,0 +1,46 @@
+= ISO 10303 STEPmod synchronization and annotation workflows
+
+image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-archive.yml/badge.svg["import-archive", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-archive.yml"]
+image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-wg12.yml/badge.svg["import-wg12", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-wg12.yml"]
+image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/annotate.yml/badge.svg["annotate", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/annotate.yml"]
+
+== Purpose
+
+This repository contains two workflows relating to ISO 10303:
+
+* workflow that synchronizes WG 12's ISO 10303 STEPmod repository at
+  ISO BitBucket to the
+  https://github.com/metanorma/iso-10303-stepmod-wg12[iso-10303-stepmod-wg12]
+  Git repository
+
+* workflow that converts the
+  https://github.com/metanorma/iso-10303-stepmod-wg12[iso-10303-stepmod-wg12]
+  Git repository into the
+  https://github.com/metanorma/iso-10303-stepmod[iso-10303-stepmod]
+  repository in the "Annotated EXPRESS" syntax.
+
+NOTE: This repository is the successor to the now archived
+https://github.com/metanorma/iso-10303-stepmod-migration[iso-10303-stepmod-migration]
+migration repositories used in the CVS to Git migration process by
+ISO/TC 184/SC 4/TF 1.
+
+== Details
+
+There are three repos involved here:
+
+* Repo with GHA workflows: https://github.com/metanorma/iso-10303-stepmod-annotate
+* Repo to hold synchronized git repo: https://github.com/metanorma/iso-10303-stepmod-wg12
+* Repo to hold annotated git repo: https://github.com/metanorma/iso-10303-stepmod
+
+
+== Frequency
+
+These workflows are run once a day to import latest changes from ISO BitBucket.
+
+
+// == Usage
+
+
+== License
+
+Copyright Ribose Inc.
