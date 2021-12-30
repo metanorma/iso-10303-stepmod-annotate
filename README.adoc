@@ -1,7 +1,6 @@
 = ISO 10303 STEPmod synchronization and annotation workflows
 
-image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-archive.yml/badge.svg["import-archive", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-archive.yml"]
-image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-wg12.yml/badge.svg["import-wg12", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/import-wg12.yml"]
+image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/sync.yml/badge.svg["sync", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/sync.yml"]
 image:https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/annotate.yml/badge.svg["annotate", link="https://github.com/metanorma/iso-10303-stepmod-annotate/actions/workflows/annotate.yml"]
 
 == Purpose
