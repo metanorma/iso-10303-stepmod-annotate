@@ -21,6 +21,6 @@ jobs:
         uses: wei/git-sync@v3
         with:
           source_repo: "https://${{ secrets.ISO_BITBUCKET_USERNAME_URLENCODED }}:${{ secrets.ISO_BITBUCKET_PAT_TOKEN_URLENCODED }}@sd.iso.org/bitbucket-pilot/scm/isotc184sc4/wg12-stepmod.git"
-          destination_repo: "https://${{ secrets.METANORMA_CI_USERNAME }}:${{ secrets.METANORMA_CI_PAT_TOKEN }}@github.com/metanorma/iso-10303-stepmod-wg12"
+          destination_repo: "https://${{ secrets.METANORMA_CI_USERNAME }}:${{ secrets.METANORMA_CI_PAT_TOKEN }}@github.com/metanorma/iso-10303-stepmod-wg12.git"
           source_branch: "refs/remotes/source/*"
           destination_branch: "refs/heads/*"
