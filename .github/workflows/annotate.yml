@@ -52,8 +52,6 @@ jobs:
       - name: Add annotations
         working-directory: iso-10303-stepmod-wg12
         run: |
-          git branch -D annotated-express || echo "Tag annotated-express not found, creating."
-          git checkout -b annotated-express
           git add -A
           git commit -m "Add Annotated EXPRESS" || echo "Nothing to commit"
 
