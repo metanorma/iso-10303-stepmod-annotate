@@ -52,8 +52,10 @@ jobs:
       - name: Add annotations
         working-directory: iso-10303-stepmod-wg12
         run: |
-          git add -u
-          git commit -m "Add stepmod annotations" || echo "Nothing to commit"
+          git branch -D annotated-express || echo "Tag annotated-express not found, creating."
+          git checkout -b annotated-express
+          git add -A
+          git commit -m "Add Annotated EXPRESS" || echo "Nothing to commit"
 
       - name: Git push to GitHub iso-10303-stepmod
         if: github.ref == 'refs/heads/main'
