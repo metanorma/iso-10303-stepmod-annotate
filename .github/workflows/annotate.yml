@@ -10,13 +10,25 @@ on:
   pull_request:
     paths-ignore:
       - '*.adoc'
-      - .github/workflows/sync.yml
   workflow_dispatch:
 
 jobs:
+  git-sync:
+    name: Sync ISO wg12-stepmod to GitHub iso-10303-stepmod-wg12
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "https://${{ secrets.ISO_BITBUCKET_USERNAME_URLENCODED }}:${{ secrets.ISO_BITBUCKET_PAT_TOKEN_URLENCODED }}@sd.iso.org/bitbucket-pilot/scm/isotc184sc4/wg12-stepmod.git"
+          destination_repo: "https://${{ secrets.METANORMA_CI_USERNAME }}:${{ secrets.METANORMA_CI_PAT_TOKEN }}@github.com/metanorma/iso-10303-stepmod-wg12.git"
+          source_branch: "refs/remotes/source/*"
+          destination_branch: "refs/heads/*"
+
   annotate:
     name: Annotate stepmod-wg12 repository
     runs-on: ubuntu-latest
+    needs: git-sync
     steps:
       - uses: ruby/setup-ruby@v1
         with:
