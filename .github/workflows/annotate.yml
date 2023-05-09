@@ -61,6 +61,24 @@ jobs:
         run: |
           stepmod-annotate-all .
 
+      - name: Download stepmod2mn and convert SVGs
+        working-directory: iso-10303-stepmod-wg12
+        run: |
+          # TODO
+          wget https://github.com/metanorma/stepmod2mn/releases/download/v2.2/stepmod2mn-2.2.jar
+
+          find . -name "" -exec java -jar stepmod2mn-2.2.jar \
+          java -jar stepmod2mn-2.2.jar stepmod -svg
+
+          # copy over per-schema EXPRESS-G files
+          git ls-files -- 'data/resources/*/*.svg' | xargs -I '{}' cp stepmod/{} {}
+
+          # copy over per-part EXPRESS-G files
+          for f in $(git ls-files -- 'data/documents/*/*.svg'); do \
+            OLDPATH=${f//documents\/resources/resource_docs}; \
+            cp stepmod/$OLDPATH $f; \
+          done
+
       - name: Add annotations
         working-directory: iso-10303-stepmod-wg12
         run: |
