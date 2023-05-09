@@ -65,10 +65,10 @@ jobs:
         working-directory: iso-10303-stepmod-wg12
         run: |
           # TODO
-          wget https://github.com/metanorma/stepmod2mn/releases/download/v2.2/stepmod2mn-2.2.jar
+          wget https://github.com/metanorma/stepmod2mn/releases/download/v1.8/stepmod2mn-1.8.jar
 
-          find . -name "" -exec java -jar stepmod2mn-2.2.jar \
-          java -jar stepmod2mn-2.2.jar stepmod -svg
+          find . -name "resource.xml" -exec java -jar stepmod2mn-1.8.jar {} \;
+          java -jar stepmod2mn-1.8.jar stepmod -svg
 
           # copy over per-schema EXPRESS-G files
           git ls-files -- 'data/resources/*/*.svg' | xargs -I '{}' cp stepmod/{} {}
