@@ -65,14 +65,15 @@ jobs:
         working-directory: iso-10303-stepmod-wg12
         run: |
           # TODO
-          wget https://github.com/metanorma/stepmod2mn/releases/download/v1.9/stepmod2mn-1.9.jar
+          # wget https://github.com/metanorma/stepmod2mn/releases/download/v1.9/stepmod2mn-1.9.jar
+          wget https://github.com/Intelligent2013/stepmod2mn/releases/download/v1.9a/stepmod2mn-1.9a.jar
 
           # convert all XML files into adoc files
-          find . -name "resource.xml" -exec java -jar stepmod2mn-1.9.jar {} \;
+          find . -name "resource.xml" -exec java -jar stepmod2mn-1.9a.jar {} \;
 
           # generate SVG images in the tree data
           # 'data' is sub-folder in iso-10303-stepmod-wg12
-          java -jar stepmod2mn-1.9.jar data -svg
+          java -jar stepmod2mn-1.9a.jar data -svg
 
           # copy over per-schema EXPRESS-G files
           git ls-files -- 'data/resources/*/*.svg' | xargs -I '{}' cp stepmod/{} {}
