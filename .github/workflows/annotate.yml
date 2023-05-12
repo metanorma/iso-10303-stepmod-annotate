@@ -75,7 +75,10 @@ jobs:
           java -jar stepmod2mn-1.10.jar data -svg
 
           # copy over per-schema EXPRESS-G files
-          git ls-files -- 'data/resources/*/*.svg' | xargs -I '{}' cp stepmod/{} {}
+          # git ls-files -- 'data/resources/*/*.svg' | xargs -I '{}' cp stepmod/{} {}
+
+          # copy all new .svg into the folder 'stepmod'
+          git ls-files --others 'data/resources/*/*.svg'  | xargs -I '{}' cp --parents {} stepmod
 
           # copy over per-part EXPRESS-G files
           for f in $(git ls-files -- 'data/documents/*/*.svg'); do \
