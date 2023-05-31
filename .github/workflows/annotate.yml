@@ -65,14 +65,18 @@ jobs:
         working-directory: iso-10303-stepmod-wg12
         run: |
           # TODO
-          wget https://github.com/metanorma/stepmod2mn/releases/download/v1.10/stepmod2mn-1.10.jar
+          STEPMOD2MN_VERSION=1.11
+          wget https://github.com/metanorma/stepmod2mn/releases/download/v$STEPMOD2MN_VERSION/stepmod2mn-$STEPMOD2MN_VERSION.jar
 
+          # INPUT_PATH=.
+          INPUT_PATH=data/resource_docs/fundamentals_of_product_description_and_support/
           # convert all XML files into adoc files
-          find . -name "resource.xml" -exec java -jar stepmod2mn-1.10.jar {} \;
+          #find . -name "resource.xml" -exec java -jar stepmod2mn-$STEPMOD2MN_VERSION.jar {} \;
+          find $INPUT_PATH -name resource.xml -exec java -jar stepmod2mn-$STEPMOD2MN_VERSION.jar {} \;
 
           # generate SVG images in the tree data
           # 'data' is sub-folder in iso-10303-stepmod-wg12
-          java -jar stepmod2mn-1.10.jar data -svg
+          java -jar stepmod2mn-$STEPMOD2MN_VERSION.jar data -svg
 
           mkdir stepmod
 
@@ -87,6 +91,17 @@ jobs:
             OLDPATH=${f//documents\/resources/resource_docs}; \
             cp stepmod/$OLDPATH $f; \
           done
+          
+          # add Gemfile and install metanorma gems
+          echo $'source "https://rubygems.org"\n\ngem "metanorma-cli"' > Gemfile
+          bundle update
+ 
+          # generate Metanorma documents
+          # to run the variant 'bundle exec metanorma', change path ../../../../resources/ to ../../../resources/
+          # (see https://github.com/metanorma/stepmod2mn/issues/14#issuecomment-785857308)
+          #find $INPUT_PATH -name document.adoc -execdir bundle exec metanorma -t iso -x html,doc,pdf document.adoc \;
+          find $INPUT_PATH -name document.adoc -execdir ./collection.sh \;
+
 
       - name: Add annotations
         working-directory: iso-10303-stepmod-wg12
