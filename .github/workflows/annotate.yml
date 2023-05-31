@@ -100,8 +100,7 @@ jobs:
           # to run the variant 'bundle exec metanorma', change path ../../../../resources/ to ../../../resources/
           # (see https://github.com/metanorma/stepmod2mn/issues/14#issuecomment-785857308)
           #find $INPUT_PATH -name document.adoc -execdir bundle exec metanorma -t iso -x html,doc,pdf document.adoc \;
-          find $INPUT_PATH -name document.adoc -execdir ./collection.sh \;
-
+          find $INPUT_PATH -name document.adoc -execdir chmod +X ./collection.sh \; -execdir ./collection.sh \;
 
       - name: Add annotations
         working-directory: iso-10303-stepmod-wg12
