@@ -5,6 +5,7 @@ on:
     branches: [ main ]
     paths-ignore:
       - '*.adoc'
+      - 'annotate.yml'
   schedule:
     - cron: '0 4 * * *'  # every day at 3:00
   pull_request:
@@ -16,8 +17,11 @@ jobs:
     name: Annotate stepmod-wg12 repository
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
+          path: .
+          repository: metanorma/iso-10303-srl
+          token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
           submodules: recursive
 
       - uses: ruby/setup-ruby@v1
