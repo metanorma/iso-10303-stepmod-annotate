@@ -19,8 +19,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: .
           repository: metanorma/iso-10303-srl
+          ref: main
           token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
           submodules: recursive
 
