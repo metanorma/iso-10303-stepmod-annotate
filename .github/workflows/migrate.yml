@@ -1,0 +1,72 @@
+name: migrate
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '*.adoc'
+  schedule:
+    - cron: '0 4 * * *'  # every day at 3:00
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+
+  migrate:
+    name: Annotate stepmod-wg12 repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: metanorma/iso-10303-srl
+          token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
+          submodules: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Download stepmod2mn
+        run: wget https://github.com/metanorma/stepmod2mn/releases/download/v1.24/stepmod2mn-1.24.jar
+
+      - name: Run migration
+        run: |
+          bundle exec stepmod-srl-migrate \
+            --stepmod2mn-executeable stepmod2mn-1.24.jar \
+            --srl-schemas-dir schemas \
+            --srl-docs-dir docs \
+            --stepmod-data-dir iso-10303-stepmod-wg12
+
+      - name: Setup Git
+        run: |
+          git config --global init.defaultBranch main
+          git config --global user.name "metanorma-ci"
+          git config --global user.email "metanorma-ci@users.noreply.github.com"
+
+      - name: Add SRL content
+        run: |
+          git add -A
+          git commit -m "Add SRL content" || echo "Nothing to commit"
+
+      - name: Git push to GitHub iso-10303-srl
+        if: github.ref == 'refs/heads/main'
+        run: |
+          max=$(git log --oneline|wc -l); \
+          for i in $(seq $max -500 1); do \
+            echo $i; g=$(git log --reverse --oneline --skip $i -n1|perl -alne'print $F[0]'); \
+            git push origin $g:refs/heads/gitconvert -f; \
+          done
+
+          for x in $(git branch | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
+            y="${x//#/ }"; \
+            echo $y; \
+            git push origin -f $y; \
+          done
+
+          for x in $(git tag | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
+            y="${x//#/ }"; \
+            echo $y; \
+            git push origin -f $y; \
+          done
+
+          git push origin :refs/heads/gitconvert -f
