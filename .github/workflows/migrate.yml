@@ -18,9 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: metanorma/iso-10303-srl
-          token: ${{ secrets.METANORMA_CI_PAT_TOKEN }}
-          submodules: true
+          submodules: recursive
 
       - uses: ruby/setup-ruby@v1
         with:
