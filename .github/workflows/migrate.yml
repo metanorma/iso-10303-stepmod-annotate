@@ -27,6 +27,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
+          bundler-cache: true
 
       - name: Download stepmod2mn
         run: wget https://github.com/metanorma/stepmod2mn/releases/download/v1.24/stepmod2mn-1.24.jar
