@@ -29,16 +29,12 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
 
-      - name: Download stepmod2mn
-        run: wget https://github.com/metanorma/stepmod2mn/releases/download/v1.25/stepmod2mn-1.25.jar
-
       - name: Run migration
         run: |
           bundle exec stepmod-srl-migrate \
-            --stepmod2mn-executeable stepmod2mn-1.25.jar \
             --srl-schemas-dir schemas \
             --srl-docs-dir documents \
-            --stepmod-data-dir iso-10303-stepmod-wg12
+            --stepmod-dir iso-10303-stepmod-wg12
 
       - name: Setup Git
         run: |
