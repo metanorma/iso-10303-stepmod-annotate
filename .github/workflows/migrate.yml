@@ -36,6 +36,10 @@ jobs:
             --srl-docs-dir documents \
             --stepmod-dir iso-10303-stepmod-wg12
 
+      - name: Add `templates` symbolic link to document `sections/`
+        run: |
+          find . -name "sections" -exec bash -c "cd {}; ln -s ../../../../templates ." \;
+
       - name: Setup Git
         run: |
           git config --global init.defaultBranch main
