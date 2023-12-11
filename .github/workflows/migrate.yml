@@ -29,16 +29,27 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
 
-      - name: Run migration
+      - name: Run migration to import from iso-10303-stepmod-wg12
         run: |
           bundle exec stepmod-srl-migrate \
             --srl-schemas-dir schemas \
             --srl-docs-dir documents \
             --stepmod-dir iso-10303-stepmod-wg12
+          rm -f metanorma.yml
+          cp documents/metanorma.yml .
 
-      - name: Add `templates` symbolic link to document `sections/`
+      - name: Copy files from iso-10303-detached-docs
         run: |
-          find . -name "sections" -exec bash -c "cd {}; ln -s ../../../../templates ." \;
+          rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
+          rsync -a iso-10303-detached-docs/documents/ documents/
+          rm -f metanorma.detached.yml
+          cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
+
+      # TODO: Remove this hack once LutaML template paths are fixed
+      - name: Add `templates` symbolic links to document root and `sections/`
+        run: |
+          find . -name "sections" -exec bash -c "cd {}; ln -s ../../../templates ." \;
+          find . -name "sections" -exec bash -c "cd {}; cd ..; ln -s ../../templates ." \;
 
       - name: Setup Git
         run: |
