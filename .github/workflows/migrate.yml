@@ -35,15 +35,46 @@ jobs:
             --srl-schemas-dir schemas \
             --srl-docs-dir documents \
             --stepmod-dir iso-10303-stepmod-wg12
-          rm -f metanorma.yml
-          cp documents/metanorma.yml .
 
-      # - name: Copy files from iso-10303-detached-docs
-      #   run: |
-      #     rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
-      #     rsync -a iso-10303-detached-docs/documents/ documents/
-      #     rm -f metanorma.detached.yml
-      #     cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
+      - name: Reset schemas sourced from detached docs so that stepmod2mn doesn't process them
+        run: |
+          git checkout schemas/resources/assembly_constraint_schema/assembly_constraint_schema.exp
+          git checkout schemas/resources/assembly_feature_relationship_schema/assembly_feature_relationship_schema.exp
+          git checkout schemas/resources/basis_schema/basis_schema.exp
+          git checkout schemas/resources/conditions_schema/conditions_schema.exp
+          git checkout schemas/resources/domain_schema/domain_schema.exp
+          git checkout schemas/resources/equations_schema/equations_schema.exp
+          git checkout schemas/resources/explicit_constraint_schema/explicit_constraint_schema.exp
+          git checkout schemas/resources/explicit_geometric_constraint_schema/explicit_geometric_constraint_schema.exp
+          git checkout schemas/resources/fea_scalar_vector_tensor_schema/fea_scalar_vector_tensor_schema.exp
+          git checkout schemas/resources/fea_scalor_tensor_schema/fea_scalor_tensor_schema.exp
+          git checkout schemas/resources/finite_element_analysis_control_and_result_schema/finite_element_analysis_control_and_result_schema.exp
+          git checkout schemas/resources/hierarchy_schema/hierarchy_schema.exp
+          git checkout schemas/resources/ISO13584_generic_expressions_schema/ISO13584_generic_expressions_schema.exp
+          git checkout schemas/resources/mathematical_functions_schema/mathematical_functions_schema.exp
+          git checkout schemas/resources/mesh_connectivity_schema/mesh_connectivity_schema.exp
+          git checkout schemas/resources/mesh_function_schema/mesh_function_schema.exp
+          git checkout schemas/resources/mesh_topology_schema/mesh_topology_schema.exp
+          git checkout schemas/resources/method_definition_schema/method_definition_schema.exp
+          git checkout schemas/resources/parameterization_schema/parameterization_schema.exp
+          git checkout schemas/resources/procedural_model_schema/procedural_model_schema.exp
+          git checkout schemas/resources/procedural_shape_model_schema/procedural_shape_model_schema.exp
+          git checkout schemas/resources/procedural_sketch_schema/procedural_sketch_schema.exp
+          git checkout schemas/resources/process_property_representation_schema/process_property_representation_schema.exp
+          git checkout schemas/resources/process_property_schema/process_property_schema.exp
+          git checkout schemas/resources/results_schema/results_schema.exp
+          git checkout schemas/resources/sketch_schema/sketch_schema.exp
+          git checkout schemas/resources/solid_shape_element_schema/solid_shape_element_schema.exp
+          git checkout schemas/resources/structural_response_definition_schema/structural_response_definition_schema.exp
+          git checkout schemas/resources/structural_response_representation_schema/structural_response_representation_schema.exp
+          git checkout schemas/resources/variational_representation_schema/variational_representation_schema.exp
+
+      - name: Copy files from iso-10303-detached-docs
+        run: |
+          # rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
+          rsync -aI iso-10303-detached-docs/documents/ documents/
+          rm -f metanorma.detached.yml
+          cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
 
       # TODO: Remove this hack once LutaML template paths are fixed
       - name: Add `templates` symbolic links to document root and `sections/`
