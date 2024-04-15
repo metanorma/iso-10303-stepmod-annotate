@@ -38,12 +38,12 @@ jobs:
           rm -f metanorma.yml
           cp documents/metanorma.yml .
 
-      - name: Copy files from iso-10303-detached-docs
-        run: |
-          rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
-          rsync -a iso-10303-detached-docs/documents/ documents/
-          rm -f metanorma.detached.yml
-          cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
+      # - name: Copy files from iso-10303-detached-docs
+      #   run: |
+      #     rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
+      #     rsync -a iso-10303-detached-docs/documents/ documents/
+      #     rm -f metanorma.detached.yml
+      #     cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
 
       # TODO: Remove this hack once LutaML template paths are fixed
       - name: Add `templates` symbolic links to document root and `sections/`
