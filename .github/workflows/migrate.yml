@@ -29,89 +29,89 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
 
-      - name: Run migration to import from iso-10303-stepmod-wg12
-        run: |
-          bundle exec stepmod-srl-migrate \
-            --srl-schemas-dir schemas \
-            --srl-docs-dir documents \
-            --stepmod-dir iso-10303-stepmod-wg12
+      # - name: Run migration to import from iso-10303-stepmod-wg12
+      #   run: |
+      #     bundle exec stepmod-srl-migrate \
+      #       --srl-schemas-dir schemas \
+      #       --srl-docs-dir documents \
+      #       --stepmod-dir iso-10303-stepmod-wg12
 
-      - name: Reset schemas sourced from detached docs so that stepmod2mn doesn't process them
-        run: |
-          git checkout schemas/resources/assembly_constraint_schema/assembly_constraint_schema.exp
-          git checkout schemas/resources/assembly_feature_relationship_schema/assembly_feature_relationship_schema.exp
-          git checkout schemas/resources/basis_schema/basis_schema.exp
-          git checkout schemas/resources/conditions_schema/conditions_schema.exp
-          git checkout schemas/resources/domain_schema/domain_schema.exp
-          git checkout schemas/resources/equations_schema/equations_schema.exp
-          git checkout schemas/resources/explicit_constraint_schema/explicit_constraint_schema.exp
-          git checkout schemas/resources/explicit_geometric_constraint_schema/explicit_geometric_constraint_schema.exp
-          git checkout schemas/resources/fea_scalar_vector_tensor_schema/fea_scalar_vector_tensor_schema.exp
-          git checkout schemas/resources/fea_scalor_tensor_schema/fea_scalor_tensor_schema.exp
-          git checkout schemas/resources/finite_element_analysis_control_and_result_schema/finite_element_analysis_control_and_result_schema.exp
-          git checkout schemas/resources/hierarchy_schema/hierarchy_schema.exp
-          git checkout schemas/resources/ISO13584_generic_expressions_schema/ISO13584_generic_expressions_schema.exp
-          git checkout schemas/resources/mathematical_functions_schema/mathematical_functions_schema.exp
-          git checkout schemas/resources/mesh_connectivity_schema/mesh_connectivity_schema.exp
-          git checkout schemas/resources/mesh_function_schema/mesh_function_schema.exp
-          git checkout schemas/resources/mesh_topology_schema/mesh_topology_schema.exp
-          git checkout schemas/resources/method_definition_schema/method_definition_schema.exp
-          git checkout schemas/resources/parameterization_schema/parameterization_schema.exp
-          git checkout schemas/resources/procedural_model_schema/procedural_model_schema.exp
-          git checkout schemas/resources/procedural_shape_model_schema/procedural_shape_model_schema.exp
-          git checkout schemas/resources/procedural_sketch_schema/procedural_sketch_schema.exp
-          git checkout schemas/resources/process_property_representation_schema/process_property_representation_schema.exp
-          git checkout schemas/resources/process_property_schema/process_property_schema.exp
-          git checkout schemas/resources/results_schema/results_schema.exp
-          git checkout schemas/resources/sketch_schema/sketch_schema.exp
-          git checkout schemas/resources/solid_shape_element_schema/solid_shape_element_schema.exp
-          git checkout schemas/resources/structural_response_definition_schema/structural_response_definition_schema.exp
-          git checkout schemas/resources/structural_response_representation_schema/structural_response_representation_schema.exp
-          git checkout schemas/resources/variational_representation_schema/variational_representation_schema.exp
+      # - name: Reset schemas sourced from detached docs so that stepmod2mn doesn't process them
+      #   run: |
+      #     git checkout schemas/resources/assembly_constraint_schema/assembly_constraint_schema.exp
+      #     git checkout schemas/resources/assembly_feature_relationship_schema/assembly_feature_relationship_schema.exp
+      #     git checkout schemas/resources/basis_schema/basis_schema.exp
+      #     git checkout schemas/resources/conditions_schema/conditions_schema.exp
+      #     git checkout schemas/resources/domain_schema/domain_schema.exp
+      #     git checkout schemas/resources/equations_schema/equations_schema.exp
+      #     git checkout schemas/resources/explicit_constraint_schema/explicit_constraint_schema.exp
+      #     git checkout schemas/resources/explicit_geometric_constraint_schema/explicit_geometric_constraint_schema.exp
+      #     git checkout schemas/resources/fea_scalar_vector_tensor_schema/fea_scalar_vector_tensor_schema.exp
+      #     git checkout schemas/resources/fea_scalor_tensor_schema/fea_scalor_tensor_schema.exp
+      #     git checkout schemas/resources/finite_element_analysis_control_and_result_schema/finite_element_analysis_control_and_result_schema.exp
+      #     git checkout schemas/resources/hierarchy_schema/hierarchy_schema.exp
+      #     git checkout schemas/resources/ISO13584_generic_expressions_schema/ISO13584_generic_expressions_schema.exp
+      #     git checkout schemas/resources/mathematical_functions_schema/mathematical_functions_schema.exp
+      #     git checkout schemas/resources/mesh_connectivity_schema/mesh_connectivity_schema.exp
+      #     git checkout schemas/resources/mesh_function_schema/mesh_function_schema.exp
+      #     git checkout schemas/resources/mesh_topology_schema/mesh_topology_schema.exp
+      #     git checkout schemas/resources/method_definition_schema/method_definition_schema.exp
+      #     git checkout schemas/resources/parameterization_schema/parameterization_schema.exp
+      #     git checkout schemas/resources/procedural_model_schema/procedural_model_schema.exp
+      #     git checkout schemas/resources/procedural_shape_model_schema/procedural_shape_model_schema.exp
+      #     git checkout schemas/resources/procedural_sketch_schema/procedural_sketch_schema.exp
+      #     git checkout schemas/resources/process_property_representation_schema/process_property_representation_schema.exp
+      #     git checkout schemas/resources/process_property_schema/process_property_schema.exp
+      #     git checkout schemas/resources/results_schema/results_schema.exp
+      #     git checkout schemas/resources/sketch_schema/sketch_schema.exp
+      #     git checkout schemas/resources/solid_shape_element_schema/solid_shape_element_schema.exp
+      #     git checkout schemas/resources/structural_response_definition_schema/structural_response_definition_schema.exp
+      #     git checkout schemas/resources/structural_response_representation_schema/structural_response_representation_schema.exp
+      #     git checkout schemas/resources/variational_representation_schema/variational_representation_schema.exp
 
-      - name: Copy files from iso-10303-detached-docs
-        run: |
-          # rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
-          rsync -aI iso-10303-detached-docs/documents/ documents/
-          rm -f metanorma.detached.yml
-          cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
+      # - name: Copy files from iso-10303-detached-docs
+      #   run: |
+      #     # rsync -a iso-10303-detached-docs/schemas/resources/ schemas/resources/
+      #     rsync -aI iso-10303-detached-docs/documents/ documents/
+      #     rm -f metanorma.detached.yml
+      #     cp iso-10303-detached-docs/metanorma.yml metanorma.detached.yml
 
-      # TODO: Remove this hack once LutaML template paths are fixed
-      - name: Add `templates` symbolic links to document root and `sections/`
-        run: |
-          find . -name "sections" -exec bash -c "cd {}; ln -s ../../../templates ." \;
-          find . -name "sections" -exec bash -c "cd {}; cd ..; ln -s ../../templates ." \;
+      # # TODO: Remove this hack once LutaML template paths are fixed
+      # - name: Add `templates` symbolic links to document root and `sections/`
+      #   run: |
+      #     find . -name "sections" -exec bash -c "cd {}; ln -s ../../../templates ." \;
+      #     find . -name "sections" -exec bash -c "cd {}; cd ..; ln -s ../../templates ." \;
 
-      - name: Setup Git
-        run: |
-          git config --global init.defaultBranch main
-          git config --global user.name "metanorma-ci"
-          git config --global user.email "metanorma-ci@users.noreply.github.com"
+      # - name: Setup Git
+      #   run: |
+      #     git config --global init.defaultBranch main
+      #     git config --global user.name "metanorma-ci"
+      #     git config --global user.email "metanorma-ci@users.noreply.github.com"
 
-      - name: Add SRL content
-        run: |
-          git add -A
-          git commit -m "Add SRL content" || echo "Nothing to commit"
+      # - name: Add SRL content
+      #   run: |
+      #     git add -A
+      #     git commit -m "Add SRL content" || echo "Nothing to commit"
 
-      - name: Git push to GitHub iso-10303-srl
-        if: github.ref == 'refs/heads/main'
-        run: |
-          max=$(git log --oneline|wc -l); \
-          for i in $(seq $max -500 1); do \
-            echo $i; g=$(git log --reverse --oneline --skip $i -n1|perl -alne'print $F[0]'); \
-            git push origin $g:refs/heads/gitconvert -f; \
-          done
+      # - name: Git push to GitHub iso-10303-srl
+      #   if: github.ref == 'refs/heads/main'
+      #   run: |
+      #     max=$(git log --oneline|wc -l); \
+      #     for i in $(seq $max -500 1); do \
+      #       echo $i; g=$(git log --reverse --oneline --skip $i -n1|perl -alne'print $F[0]'); \
+      #       git push origin $g:refs/heads/gitconvert -f; \
+      #     done
 
-          for x in $(git branch | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
-            y="${x//#/ }"; \
-            echo $y; \
-            git push origin -f $y; \
-          done
+      #     for x in $(git branch | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
+      #       y="${x//#/ }"; \
+      #       echo $y; \
+      #       git push origin -f $y; \
+      #     done
 
-          for x in $(git tag | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
-            y="${x//#/ }"; \
-            echo $y; \
-            git push origin -f $y; \
-          done
+      #     for x in $(git tag | tr -ds '*' '' | paste -d " " - - - - - - - - - - | tr -s ' ' '#'); do \
+      #       y="${x//#/ }"; \
+      #       echo $y; \
+      #       git push origin -f $y; \
+      #     done
 
-          git push origin :refs/heads/gitconvert -f
+      #     git push origin :refs/heads/gitconvert -f
