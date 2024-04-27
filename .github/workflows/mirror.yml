@@ -1,0 +1,27 @@
+name: mirror
+
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '*.adoc'
+      - 'migrate.yml'
+  schedule:
+    - cron: '0 4 * * *'  # every day at 3:00
+  pull_request:
+    paths-ignore:
+      - '*.adoc'
+  workflow_dispatch:
+
+jobs:
+  git-sync:
+    name: Sync ISO wg12-stepmod to GitHub iso-10303-stepmod-wg12
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "https://${{ secrets.ISO_BITBUCKET_USERNAME_URLENCODED }}:${{ secrets.ISO_BITBUCKET_PAT_TOKEN_URLENCODED }}@sd.iso.org/bitbucket-pilot/scm/isotc184sc4/wg12-stepdev.git"
+          destination_repo: "https://${{ secrets.METANORMA_CI_USERNAME }}:${{ secrets.METANORMA_CI_PAT_TOKEN }}@github.com/metanorma/iso-10303-stepmod-wg12.git"
+          source_branch: "refs/remotes/source/*"
+          destination_branch: "refs/heads/*"
